@@ -1,8 +1,10 @@
 # UserAgent-Switcher
 
-A highly configurable browser extension for spoofing your User-Agent string.
+A simple browser extension for spoofing your User-Agent string.
 
-UserAgent-Switcher modifies both the User-Agent in your browser's request headers and relevant JavaScript `navigator` properties (e.g., `navigator.userAgent`, `navigator.appVersion`, `navigator.platform`). It also supports modern browser identification mechanisms such as Client Hints headers and the `navigator.userAgentData` object, ensuring consistent and comprehensive spoofing across all detection methods.
+A fork of [this extension](https://github.com/ray-lothian/UserAgent-Switcher) that actually works on Firefox out-of-the-box without fiddling with the settings.
+
+This extension modifies both the User-Agent in your browser's request headers and relevant JavaScript `navigator` properties (e.g., `navigator.userAgent`, `navigator.appVersion`, `navigator.platform`). It also supports modern browser identification mechanisms such as Client Hints headers and the `navigator.userAgentData` object, ensuring consistent and comprehensive spoofing across all detection methods.
 
 ## Key Features
 
@@ -11,25 +13,16 @@ UserAgent-Switcher modifies both the User-Agent in your browser's request header
     * Spoof User-Agent per specific hostname.
     * Set different User-Agents for individual browser tabs.
     * Utilize Firefox's container feature for distinct User-Agents per container (not available on manifest v3 yet).
-* **Randomization:** Option to randomly select a User-Agent from a user-defined list.
-* **Easy Import/Export:** Manage your User-Agent lists with simple import and export functionality.
 
 ## Demo / Review
 
 See the extension in action:
 
-[![User-Agent Switcher and Manager - Browser Extension Review](https://img.youtube.com/vi/-aVFxvF3N_E/0.jpg)](http://www.youtube.com/watch?v=-aVFxvF3N_E)
-
-*(Video: "User-Agent Switcher and Manager - Browser Extension Review")*
+Pending
 
 ## Installation - Official Releases
 
-You can install the latest stable version from your browser's official add-on store:
-
-* **Chrome:** [User-Agent Switcher and Manager](https://chrome.google.com/webstore/detail/user-agent-switcher-and-m/bhchdcejhohfmigjafbampogmaanbfkg)
-* **Firefox:** [User-Agent String Switcher](https://addons.mozilla.org/firefox/addon/user-agent-string-switcher/)
-* **Edge:** [UserAgent Switcher and Manager](https://microsoftedge.microsoft.com/addons/detail/useragent-switcher-and-m/cnjkedgepfdpdbnepgmajmmjdjkjnifa)
-* **Opera:** [User-Agent Switcher](https://addons.opera.com/extensions/details/user-agent-switcher-8/)
+Pending
 
 ## Usage
 
@@ -38,24 +31,25 @@ For detailed instructions on how to use the extension, including configuration o
 
 ## Manual Installation (from Source Files)
 
+### Build an `.xpi` Package from `src/`
+
+This repository includes a helper script to package the extension directly from the `src/` directory:
+
+```bash
+bash package-xpi.sh
+```
+
+The generated package is saved as `dist/useragent-switcher.xpi`.
+
+You can also provide a custom output name:
+
+```bash
+bash package-xpi.sh my-custom-name
+```
+
+This will create `dist/my-custom-name.xpi`.
+
 If you have cloned or downloaded the source files from this repository, you can manually install the extension in your browser. This is useful for development, testing the latest (potentially unstable) code, or if you prefer to install extensions directly from source.
-
-### For Chromium-based Browsers (Google Chrome, Microsoft Edge, Opera)
-
-The process for these browsers involves loading the extension as an "unpacked extension":
-
-1.  **Get the Source:** Ensure you have the extension's source files (including `manifest.json` at the root of the extension's directory structure) on your local machine. If you've cloned this repository, these files are typically in the main or a `src/` directory. If there's a build process (e.g., `npm run build`), run it first to generate the distributable files, typically in a `dist/` or `build/` folder.
-2.  **Open Browser Extensions Page:**
-    * **Chrome:** Navigate to `chrome://extensions`
-    * **Edge:** Navigate to `edge://extensions`
-    * **Opera:** Navigate to `opera://extensions`
-3.  **Enable Developer Mode:**
-    * Look for a toggle switch labeled "Developer mode" (usually in the top-right or bottom-left corner of the extensions page) and turn it **on**.
-4.  **Load Unpacked Extension:**
-    * Once Developer Mode is enabled, a button like "Load unpacked" will appear. Click it.
-    * A file dialog will open. Navigate to and select the directory containing the extension's source files (the folder that has the `manifest.json` directly inside it). Click "Select Folder" or "Open."
-
-The UserAgent-Switcher extension should now be loaded and active. If you make changes to the source code, you'll typically need to return to the extensions page and click a "Reload" icon or button for the extension to apply the changes.
 
 ### For Mozilla Firefox
 
