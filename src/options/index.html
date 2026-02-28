@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>User-Agent Switcher Options</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <h1>User-Agent Switcher (Whitelist Mode)</h1>
+
+  <label for="ua">Spoofed user-agent string</label>
+  <textarea id="ua" rows="4" spellcheck="false"></textarea>
+
+  <label for="whitelist">Whitelist domains (comma-separated)</label>
+  <textarea id="whitelist" rows="4" placeholder="example.com, app.example.com"></textarea>
+
+  <label for="protected">Disable spoofing for URLs containing these values (comma-separated)</label>
+  <textarea id="protected" rows="4" placeholder="accounts.example.com/login, example.com/recaptcha"></textarea>
+
+  <label class="checkbox-row">
+    <input id="userAgentData" type="checkbox">
+    Expose "navigator.userAgentData" object
+  </label>
+
+  <div class="footer">
+    <button id="save">Save</button>
+    <span id="status"></span>
+  </div>
+
+  <p class="note">Click the extension icon to toggle enable/disable. No popup is used.</p>
+
+  <script src="index.js"></script>
+</body>
+</html>
