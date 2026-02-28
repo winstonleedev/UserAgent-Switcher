@@ -165,9 +165,9 @@ const buildClientHints = o => {
 };
 
 const refreshBadge = () => {
-  const mode = prefs.enabled ? 'on' : 'off';
+  // const mode = prefs.enabled ? 'on' : 'off';
   chrome.browserAction.setIcon({
-    path: 'icons/' + mode + '/512.png'
+    path: 'icons/on/512.png'
   });
   chrome.browserAction.setBadgeText({
     text: prefs.enabled ? 'ON' : 'OFF'
