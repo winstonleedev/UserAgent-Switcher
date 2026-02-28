@@ -101,42 +101,8 @@ chrome.storage.local.get(prefs, ps => {
       cookieStoreIds[t.id] = t.cookieStoreId;
     });
 
-    // update prefs.ua from the managed storage
-    try {
-      chrome.storage.managed.get({
-        'ua': '',
-        'json': ''
-      }, rps => {
-        if (!chrome.runtime.lastError) {
-          const p = {};
-          if (rps.json) {
-            try {
-              const j = JSON.parse(rps.json);
-              if (prefs['json-guid'] !== j['json-guid'] || j['json-forced']) {
-                Object.assign(p, j);
-                console.warn('preferences are updated by an admin');
-              }
-            }
-            catch (e) {
-              console.warn('cannot parse remote JSON', e);
-            }
-          }
-          if (rps.ua) {
-            p.ua = rps.ua;
-            console.warn('user-agent string is updated by an admin');
-          }
-          chrome.storage.local.set(p, () => {
-            ua.update(undefined, undefined, DCSI);
-          });
-        }
-        else {
-          ua.update(undefined, undefined, DCSI);
-        }
-      });
-    }
-    catch (e) {
-      ua.update(undefined, undefined, DCSI);
-    }
+    // finish initialization
+    ua.update(undefined, undefined, DCSI);
   });
 
   if (chrome.browserAction.setBadgeBackgroundColor) { // FF for Android
@@ -295,8 +261,9 @@ const ua = {
     windowId = windowId || (tabId ? tabs[tabId] : 'global');
     log('ua.object is called', tabId, windowId, cookieStoreId);
 
-    if (this._obj[cookieStoreId]) {
-      return this._obj[cookieStoreId][windowId] || this._obj[cookieStoreId].global;
+    const group = this._obj[cookieStoreId] || this._obj[DCSI];
+    if (group) {
+      return group[windowId] || group.global;
     }
   },
   string(str, windowId, cookieStoreId) {
@@ -756,31 +723,3 @@ chrome.runtime.onMessage.addListener((request, sender, response) => {
     ua.update(request.value, request.windowId, request.cookieStoreId);
   }
 });
-
-/* FAQs & Feedback */
-{
-  const {management, runtime: {onInstalled, setUninstallURL, getManifest}, storage, tabs} = chrome;
-  if (navigator.webdriver !== true) {
-    const page = getManifest().homepage_url;
-    const {name, version} = getManifest();
-    onInstalled.addListener(({reason, previousVersion}) => {
-      management.getSelf(({installType}) => installType === 'normal' && storage.local.get({
-        'faqs': true,
-        'last-update': 0
-      }, prefs => {
-        if (reason === 'install' || (prefs.faqs && reason === 'update')) {
-          const doUpdate = (Date.now() - prefs['last-update']) / 1000 / 60 / 60 / 24 > 45;
-          if (doUpdate && previousVersion !== version) {
-            tabs.query({active: true, currentWindow: true}, tbs => tabs.create({
-              url: page + '?version=' + version + (previousVersion ? '&p=' + previousVersion : '') + '&type=' + reason,
-              active: reason === 'install',
-              ...(tbs && tbs.length && {index: tbs[0].index + 1})
-            }));
-            storage.local.set({'last-update': Date.now()});
-          }
-        }
-      }));
-    });
-    setUninstallURL(page + '?rd=feedback&name=' + encodeURIComponent(name) + '&version=' + version);
-  }
-}
