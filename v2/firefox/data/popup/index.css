@@ -233,16 +233,7 @@ select {
   background-color: var(--bg-color-light);
 }
 
-#explore {
-  color: var(--color) !important;
-  background-color: var(--bg-color) !important;
-}
-#explore .title {
-  color: var(--color) !important;
-}
-#explore:not([data-loaded="true"]) {
-  height: 18px;
-}
+#explore rules removed
 
 body[data-android="true"] [data-cmd="reload"],
 body[data-android="true"] [data-cmd="window"] {
