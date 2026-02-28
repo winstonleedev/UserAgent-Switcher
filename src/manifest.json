@@ -1,8 +1,18 @@
 {
   "manifest_version": 2,
   "name": "Winston's User-Agent Switcher",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Whitelist-only user-agent spoofing with toolbar toggle",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{bdc970ee-2e02-4cd7-aa85-07b91634c87c}",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    }
+  },
   "permissions": [
     "storage",
     "<all_urls>",
