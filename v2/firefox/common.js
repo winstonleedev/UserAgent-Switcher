@@ -31,7 +31,7 @@ const prefs = {
   ],
   'custom': {},
   'siblings': {}, // a list of domains that are considered siblings (use same index for all)
-  'mode': 'blacklist',
+  'mode': 'whitelist',
   'color': '#777',
   'cache': true,
   'exactMatch': false,
