@@ -18,9 +18,17 @@ chrome.tabs.onCreated.addListener(tab => {
 });
 
 const prefs = {
-  'ua': '',
+  'ua': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36',
   'blacklist': [],
-  'whitelist': [],
+  'whitelist': [
+    'hikorea.go.kr',
+    'www.hikorea.go.kr',
+    'duckduckgo.com',
+    'www.dhlottery.co.kr',
+    'el.dhlottery.co.kr',
+    'm.dhlottery.co.kr',
+    'webbrowsertools.com'
+  ],
   'custom': {},
   'siblings': {}, // a list of domains that are considered siblings (use same index for all)
   'mode': 'blacklist',
@@ -159,6 +167,7 @@ chrome.storage.local.get(prefs, ps => {
     checked: prefs.mode === 'custom'
   }, () => chrome.runtime.lastError);
 });
+
 chrome.storage.onChanged.addListener(ps => {
   Object.keys(ps).forEach(key => prefs[key] = ps[key].newValue);
 
