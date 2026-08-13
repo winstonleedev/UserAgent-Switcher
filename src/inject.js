@@ -9,7 +9,7 @@ if (window !== top && location.href === 'about:blank') {
       const nav = top.navigator;
 
       navigator.__defineGetter__('userAgent', () => nav.userAgent);
-      navigator.__defineGetter__('appVersion', () => nav.appVersion);
+      navigator.__defineGetter__('appVersion', () => nav.userAgent);
       navigator.__defineGetter__('platform', () => nav.platform);
       navigator.__defineGetter__('vendor', () => nav.vendor);
       if ('userAgentData' in nav) {
