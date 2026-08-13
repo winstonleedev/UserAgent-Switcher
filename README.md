@@ -22,7 +22,7 @@ Pending
 
 ## Installation - Official Releases
 
-Pending
+[Product page on addons.mozilla.org](https://addons.mozilla.org/en-US/firefox/addon/winston-s-user-agent-switcher/)
 
 ## Usage
 
