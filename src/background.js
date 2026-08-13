@@ -2,7 +2,7 @@
 
 const defaults = {
   enabled: true,
-  ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36',
+  ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.4129.78',
   whitelist: [
     'hikorea.go.kr',
     'www.hikorea.go.kr',
@@ -219,14 +219,18 @@ const onCommitted = details => {
   }
 
   const o = parseUA(prefs.ua);
-  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(o))));
-  chrome.tabs.executeScript(tabId, {
-    runAt: 'document_start',
-    frameId,
-    code: `{
+
+  chrome.scripting.executeScript({
+    target: {
+      tabId,
+      frameIds: [frameId]
+    },
+    world: 'MAIN',
+    injectImmediately: true,
+    func: o => {
       const script = document.createElement('script');
-      script.textContent = \`{
-        const o = JSON.parse(decodeURIComponent(escape(atob('${encoded}'))));
+      script.textContent = `{
+        const o = ${JSON.stringify(o)};
 
         if (o.userAgentDataBuilder) {
           const b = o.userAgentDataBuilder;
@@ -293,10 +297,11 @@ const onCommitted = details => {
             navigator.__defineGetter__(key, () => o[key]);
           }
         }
-      }\`;
+      }`;
       (document.documentElement || document.head || document).appendChild(script);
       script.remove();
-    }`
+    },
+    args: [o]
   }, () => chrome.runtime.lastError);
 };
 

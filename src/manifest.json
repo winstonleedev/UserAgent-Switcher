@@ -18,7 +18,8 @@
     "<all_urls>",
     "webNavigation",
     "webRequest",
-    "webRequestBlocking"
+    "webRequestBlocking",
+    "scripting"
   ],
   "icons": {
     "512": "icons/on/512.png"
